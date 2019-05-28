@@ -24,3 +24,4 @@ console.log(validator.isURL('bit/tamsreport'));
 console.log(chalk.bold.bgRed('Hello World'));
 console.log(chalk.bold.bgCyan('Pastel'));
 console.log(chalk.inverse.bgCyan('Pastel'));
+console.log(chalk.magenta.inverse.bold('Pastel'));

@@ -25,3 +25,6 @@ console.log(chalk.bold.bgRed('Hello World'));
 console.log(chalk.bold.bgCyan('Pastel'));
 console.log(chalk.inverse.bgCyan('Pastel'));
 console.log(chalk.magenta.inverse.bold('Pastel'));
+
+// arg vector รับค่า input จาก command line
+console.log(process.argv);

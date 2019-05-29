@@ -1,9 +1,40 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 const getNotes = function() {
   return 'Your notes ...';
 };
 
+const message = {
+  add: chalk.bold.green.inverse('Note was added'),
+  remove: chalk.bold.green.inverse('Note removed!'),
+  noteNotFound: chalk.bold.red.inverse('Note not found!'),
+  duplicateNotes: chalk.bold.red.inverse('Note was taken!')
+};
+
+// * Remove a note
+const removeNote = function(title) {
+  // เรียกข้อมูลใน notes.json
+  const notes = loadNotes(); // object
+
+  // filter ได้ array ใหม่ที่ไม่มี title ที่รับค่ามาจาก remove
+  const noteToKeep = notes.filter(function(note) {
+    return note.title !== title;
+  });
+
+  console.log(noteToKeep);
+  if (notes.length > noteToKeep.length) {
+    // ถ้าลบออกแล้ว array ที่เก็บจะน้อยกว่าอันเดิม (noteToKepp < notes)
+    console.log(message.remove);
+    // save to json
+    saveNotes(noteToKeep);
+  } else if (notes.length === noteToKeep.length) {
+    // ถ้าเท่ากัน แปลว่าไม่มี array ไหนลบออกเลย
+    console.log(message.noteNotFound);
+  }
+};
+
+// * Add new note
 const addNote = function(title, body) {
   // รับค่าจาก app.js แล้วเพิ่มเข้า object
 
@@ -17,10 +48,7 @@ const addNote = function(title, body) {
     return note.title === title;
   });
 
-  // check
-  // console.log(duplicateNotes);
-
-  if (duplicateNotes === 0) {
+  if (duplicateNotes.length === 0) {
     // ถ้าไม่มีข้อมูลซ้ำ
 
     // * เพิ่ม object ใหม่ให้ object เดิม * ไม่ถูก overwrite เพราะใช้ push ไปทั้ง object แล้วค่อยเขียน notes.json ใหม่
@@ -32,9 +60,9 @@ const addNote = function(title, body) {
     // save to JSON
     saveNotes(notes);
 
-    console.log('New notes added!!');
+    console.log(message.add);
   } else {
-    console.log('dNote title taken!');
+    console.log(message.duplicateNotes);
   }
 };
 
@@ -67,5 +95,6 @@ const loadNotes = function() {
 
 module.exports = {
   getNotes: getNotes,
-  addNote: addNote
+  addNote: addNote,
+  removeNote: removeNote
 };

@@ -52,16 +52,26 @@ yargs.command({
   command: "add",
   describe: "Add a new note",
   builder: {
-    // option เอาไว้ระบุการรับค่าจาก command สามารถตั้ง data type ได้
+    // option เอาไว้ระบุการรับค่าจาก command
     title: {
-      describe: "Note title", // บอกว่า option นี้คืออะไร
-      demandOption: true, // ตั้งค่าให้กรอก command line เข้ามา ถ้าไม่มี option นี้ตอนสั่ง command ก็จะ error
-      type: "string" // type ว่าให้ใส่ string เท่านั้น
+      // บอกว่า option นี้คืออะไร
+      describe: "Note title",
+      // ตั้งค่าให้กรอก command line เข้ามา ถ้าไม่มี option นี้ตอนสั่ง command ก็จะ error
+      demandOption: true,
+      // type ว่าให้ใส่ string เท่านั้น
+      type: "string"
+    },
+    body: {
+      // Challenge
+      describe: "Note body",
+      demandOption: true,
+      type: "string"
     }
   },
   handler: function(argv) {
     // แสดงผลข้อความเมื่อเรียกใช้ command
-    console.log("Title: ", argv.title);
+    console.log("Title " + argv.title); // แสดง title
+    console.log("Body " + argv.body); // แสดง body
   }
 });
 

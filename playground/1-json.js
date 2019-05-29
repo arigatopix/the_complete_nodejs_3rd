@@ -34,4 +34,21 @@ const data = JSON.parse(dataJSON);
 console.log(data.title);
  */
 
-//
+// * Assignment *
+// Load and parse the JSON data (Buffer > toString())
+// LOAD
+const dataBuffer = fs.readFileSync("1-json.json");
+// Buffer to JSON
+const dataJSON = dataBuffer.toString();
+// JSON to Object
+const data = JSON.parse(dataJSON);
+console.log(data);
+
+// Change the name and age property using your info
+const ownData = { ...data, name: "Teeruch", age: 26 };
+
+// Stringify to JSON
+const ownDataJSON = JSON.stringify(ownData);
+
+// Write to 1-json.json
+fs.writeFileSync("1-json.json", ownDataJSON);

@@ -3,13 +3,19 @@ const chalk = require("chalk");
 
 const getNotes = () => "Your notes ...";
 
-const { message } = chalk.bold.green;
-
 const message = {
   add: chalk.bold.green.inverse("Note was added"),
   remove: chalk.bold.green.inverse("Note removed!"),
   noteNotFound: chalk.bold.red.inverse("Note not found!"),
   duplicateNotes: chalk.bold.red.inverse("Note was taken!")
+};
+
+// * Listing Notes
+const listNotes = () => {
+  const notes = loadNotes();
+  console.log(chalk.white.bold.inverse("Your notes..."));
+  // show all
+  notes.forEach(note => console.log(note.title));
 };
 
 // * Remove a note
@@ -92,5 +98,6 @@ const loadNotes = () => {
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
-  removeNote: removeNote
+  removeNote: removeNote,
+  listNotes: listNotes
 };

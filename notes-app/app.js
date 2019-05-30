@@ -1,6 +1,4 @@
 // import package
-const validator = require("validator");
-const chalk = require("chalk");
 const yargs = require("yargs");
 
 // import another files
@@ -74,8 +72,16 @@ yargs.command({
 yargs.command({
   command: "read",
   describe: "Read a note",
-  handler() {
-    console.log("Reading a note");
+  builder: {
+    title: {
+      describe: "Read note search by title",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler(argv) {
+    // ต้องมี builder ด้วยถึงจะเรียกใช้ argv ได้
+    notes.readNote(argv.title);
   }
 });
 

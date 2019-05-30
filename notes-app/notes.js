@@ -10,6 +10,23 @@ const message = {
   duplicateNotes: chalk.bold.red.inverse("Note was taken!")
 };
 
+// * Read note
+const readNote = title => {
+  // load notes object
+  const notes = loadNotes();
+
+  // find note in notes ถ้าไม่เจอให้แสดง error
+  const note = notes.find(note => note.title === title);
+
+  if (!note) {
+    // กรณีหาไม่เจอ
+    return console.log(message.noteNotFound);
+  }
+
+  // หาเจอ
+  console.log(chalk.white.bold.inverse(note.title));
+};
+
 // * Listing Notes
 const listNotes = () => {
   const notes = loadNotes();
@@ -45,13 +62,16 @@ const addNote = (title, body) => {
   // เรียกข้อมูลเก่าจาก notes.json ได้ object แล้ว
   const notes = loadNotes();
 
-  // filter title, body ที่ซ้ำกันออก
-  const duplicateNotes = notes.filter(note => note.title === title);
+  // ? filter title, body ที่ซ้ำกันออก ข้อเสียคือต้อง loop สมาชิกทุกตัว มันจะช้า
+  // const duplicateNotes = notes.filter(note => note.title === title);
   // notes.title เทียบกับ title ที่รับมา เก็บเฉพาะที่ไม่ซ้ำ ถ้า ture คือซ้ำ โดยเก็บเป็น array ใหม่
   // โดยปกติเราจะ filter ออกโดยเอา false แต่อันนี้อยากเก็บ true ไปเช็ค
 
-  if (duplicateNotes.length === 0) {
-    // ถ้าไม่มีข้อมูลซ้ำ
+  // ใช้ find() method หาแทน filter ถ้าเจอเหมือนกัน ไม่ให้ add เพิ่ม
+  const duplicateNote = notes.find(note => note.title === title);
+
+  if (!duplicateNote) {
+    // ถ้าไม่มี duplicate ให้เพิ่ม note
 
     // * เพิ่ม object ใหม่ให้ object เดิม * ไม่ถูก overwrite เพราะใช้ push ไปทั้ง object แล้วค่อยเขียน notes.json ใหม่
     notes.push({
@@ -99,5 +119,6 @@ module.exports = {
   getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
-  listNotes: listNotes
+  listNotes: listNotes,
+  readNote: readNote
 };

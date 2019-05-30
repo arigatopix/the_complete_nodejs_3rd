@@ -1,28 +1,26 @@
-const fs = require('fs');
-const chalk = require('chalk');
+const fs = require("fs");
+const chalk = require("chalk");
 
-const getNotes = function() {
-  return 'Your notes ...';
-};
+const getNotes = () => "Your notes ...";
+
+const { message } = chalk.bold.green;
 
 const message = {
-  add: chalk.bold.green.inverse('Note was added'),
-  remove: chalk.bold.green.inverse('Note removed!'),
-  noteNotFound: chalk.bold.red.inverse('Note not found!'),
-  duplicateNotes: chalk.bold.red.inverse('Note was taken!')
+  add: chalk.bold.green.inverse("Note was added"),
+  remove: chalk.bold.green.inverse("Note removed!"),
+  noteNotFound: chalk.bold.red.inverse("Note not found!"),
+  duplicateNotes: chalk.bold.red.inverse("Note was taken!")
 };
 
 // * Remove a note
-const removeNote = function(title) {
+const removeNote = title => {
   // เรียกข้อมูลใน notes.json
   const notes = loadNotes(); // object
 
   // filter ได้ array ใหม่ที่ไม่มี title ที่รับค่ามาจาก remove
-  const noteToKeep = notes.filter(function(note) {
-    return note.title !== title;
-  });
+  const noteToKeep = notes.filter(note => note.title !== title);
+  // console.log(noteToKeep);
 
-  console.log(noteToKeep);
   if (notes.length > noteToKeep.length) {
     // ถ้าลบออกแล้ว array ที่เก็บจะน้อยกว่าอันเดิม (noteToKepp < notes)
     console.log(message.remove);
@@ -35,18 +33,16 @@ const removeNote = function(title) {
 };
 
 // * Add new note
-const addNote = function(title, body) {
+const addNote = (title, body) => {
   // รับค่าจาก app.js แล้วเพิ่มเข้า object
 
   // เรียกข้อมูลเก่าจาก notes.json ได้ object แล้ว
   const notes = loadNotes();
 
   // filter title, body ที่ซ้ำกันออก
-  const duplicateNotes = notes.filter(function(note) {
-    // notes.title เทียบกับ title ที่รับมา เก็บเฉพาะที่ไม่ซ้ำ ถ้า ture คือซ้ำ โดยเก็บเป็น array ใหม่
-    // โดยปกติเราจะ filter ออกโดยเอา false แต่อันนี้อยากเก็บ true ไปเช็ค
-    return note.title === title;
-  });
+  const duplicateNotes = notes.filter(note => note.title === title);
+  // notes.title เทียบกับ title ที่รับมา เก็บเฉพาะที่ไม่ซ้ำ ถ้า ture คือซ้ำ โดยเก็บเป็น array ใหม่
+  // โดยปกติเราจะ filter ออกโดยเอา false แต่อันนี้อยากเก็บ true ไปเช็ค
 
   if (duplicateNotes.length === 0) {
     // ถ้าไม่มีข้อมูลซ้ำ
@@ -66,21 +62,21 @@ const addNote = function(title, body) {
   }
 };
 
-const saveNotes = function(notes) {
+const saveNotes = notes => {
   // save new notes object to JSON
   const dataJSON = JSON.stringify(notes);
 
   // writeFile
-  fs.writeFileSync('notes.json', dataJSON);
+  fs.writeFileSync("notes.json", dataJSON);
 };
 
-const loadNotes = function() {
+const loadNotes = () => {
   // ERROR handle
   try {
     // * ถ้ามีข้อมูลใน notes.json จะ run code นี้
 
     // load from notes.json ใช้ fs.readFileSync
-    const dataBuffer = fs.readFileSync('notes.json');
+    const dataBuffer = fs.readFileSync("notes.json");
 
     // converse Buffer to JSON (string)
     const dataJSON = dataBuffer.toString();

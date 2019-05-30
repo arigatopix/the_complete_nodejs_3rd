@@ -1,4 +1,1 @@
-[
-  { "title": "Find friend", "body": "facebook.com" },
-  { "title": "walk the dog", "body": "at 9.00" }
-]
+[{"title":"walk the dog","body":"at 9.00"},{"title":"Find friend","body":"Hello friend"}]

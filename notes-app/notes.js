@@ -4,7 +4,7 @@ const chalk = require("chalk");
 const getNotes = () => "Your notes ...";
 
 const message = {
-  add: chalk.bold.green.inverse("Note was added"),
+  add: chalk.bold.green.inverse("New note added"),
   remove: chalk.bold.green.inverse("Note removed!"),
   noteNotFound: chalk.bold.red.inverse("Note not found!"),
   duplicateNotes: chalk.bold.red.inverse("Note was taken!")
@@ -69,6 +69,9 @@ const addNote = (title, body) => {
 
   // ใช้ find() method หาแทน filter ถ้าเจอเหมือนกัน ไม่ให้ add เพิ่ม
   const duplicateNote = notes.find(note => note.title === title);
+
+  // pause code เพื่อ debug ใช้คู่กับ cmd node inspect app.js ... ใช้ google chrome ดู
+  // debugger;
 
   if (!duplicateNote) {
     // ถ้าไม่มี duplicate ให้เพิ่ม note
